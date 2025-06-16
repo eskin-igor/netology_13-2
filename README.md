@@ -53,7 +53,7 @@ su - cryptouser
 
 ![](https://github.com/eskin-igor/netology_13-2/blob/main/13-2/13-02-01-02.JPG)
  
-Настроим зашифрованный каталог ecryptfs.
+Настроим зашифрованный каталог с помощью eCryptfs.
 ```
 ecryptfs-setup-private
 ```
@@ -62,7 +62,8 @@ ecryptfs-setup-private
 ![](https://github.com/eskin-igor/netology_13-2/blob/main/13-2/13-02-01-03.JPG)
  
 Обратите внимание: Logout, and log back in to begin using your encrypted directory (Выйдите из системы и войдите снова, чтобы начать использовать зашифрованный каталог).  
-Этот шаг создаст два каталога в нашем домашнем каталоге с именами Private и .Private.  
+
+ecryptfs-setup-private создаст два каталога в нашем домашнем каталоге с именами Private и .Private.  
 Где каталог .Private будет содержать зашифрованные данные, а Private будет являться точкой монтирования для расшифрованных данных.
 
 Посмотреть скрипт настроек шифрования.
@@ -106,7 +107,7 @@ sudo nano /home/cryptouser/Private/test_file
 ```
 ecryptfs-mount-private
 ```
-Для удаления (сокрытия) незашифрованных файлов из каталога Private, нужно размонтировать этот каталог.
+Для удаления незашифрованных файлов из каталога Private, нужно размонтировать этот каталог.
 ```
 ecryptfs-umount-private
 ```
@@ -155,7 +156,7 @@ sudo apt install gparted
 * luksUUID - показать UUID раздела;
 * luksDump - создать резервную копию заголовков LUKS.
 
-Подготовка шифрованного раздела (luksFormat):
+Создание шифрованного раздела (luksFormat):
 ```
 sudo cryptsetup -y -v --type luks2 luksFormat /dev/sda2
 ```
@@ -164,7 +165,7 @@ sudo cryptsetup -y -v --type luks2 luksFormat /dev/sda2
 sudo cryptsetup open /dev/ sda2 disk
 ls /dev/mapper/disk
 ```
-Форматирование раздела:
+Форматирование раздела (запись нулями):
 ```
 sudo dd if=/dev/zero of=/dev/mapper/disk
 sudo mkfs.ext4 /dev/mapper/disk
